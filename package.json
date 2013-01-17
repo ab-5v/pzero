@@ -1,0 +1,26 @@
+{
+    "name": "p",
+    "version": "0.0.1",
+    "description": "Small promise lib",
+    "keywords": [ "promise", "deferred", "flow" ],
+    "author": {
+        "name": "Artur Burtsev",
+        "email": "artjock@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/artjock/p.git"
+    },
+    "engines": {
+        "node": "*"
+    },
+    "devDependencies": {
+        "mocha": "*",
+        "expect.js": "*"
+    },
+    "main": "lib/p",
+    "scripts": {
+        "test": "mocha test/spec"
+    },
+    "private": true
+}
