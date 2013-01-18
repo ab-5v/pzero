@@ -21,6 +21,5 @@
     "main": "lib/p",
     "scripts": {
         "test": "mocha test/spec"
-    },
-    "private": true
+    }
 }
