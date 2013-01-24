@@ -1,3 +1,4 @@
+var sinon = require('sinon');
 var expect = require('expect.js');
 var p = require('../../lib/p.js');
 
@@ -91,4 +92,13 @@ describe('promise', function() {
         expect(res).to.eql(1);
     });
 
+    it('should be resolved with falsy value', function() {
+        var p1 = p();
+        var callback = sinon.spy();
+
+        p1.resolve(false);
+        p1.then(callback);
+
+        expect(callback.called).to.be.ok();
+    });
 });
