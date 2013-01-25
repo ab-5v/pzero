@@ -101,4 +101,34 @@ describe('promise', function() {
 
         expect(callback.called).to.be.ok();
     });
+
+    it('should chain promises', function(done) {
+        var res = '';
+        var f1 = function() { var p1 = p(); p1.resolve(); res += 'p1'; return p1; }
+        var f2 = function() { var p2 = p(); p2.resolve(); res += 'p2'; return p2; }
+        var f3 = function() { var p3 = p(); p3.resolve(); res += 'p3'; return p3; }
+
+        f1()
+            .then(f2)
+            .then(f3)
+            .then(function() {
+                expect(res).to.eql('p1p2p3');
+                done();
+            });
+    });
+
+    it('should chain promises right order', function(done) {
+        var res = '';
+        var f1 = function() { var p1 = p(); setTimeout(function() {p1.resolve();}, 40); res += 'p1'; return p1; }
+        var f2 = function() { var p2 = p(); setTimeout(function() {p2.resolve();}, 20); res += 'p2'; return p2; }
+        var f3 = function() { var p3 = p(); setTimeout(function() {p3.resolve();}, 10); res += 'p3'; return p3; }
+
+        f1()
+            .then(f2)
+            .then(f3)
+            .then(function() {
+                expect(res).to.eql('p1p2p3');
+                done();
+            });
+    });
 });
