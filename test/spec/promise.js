@@ -131,4 +131,32 @@ describe('promise', function() {
                 done();
             });
     });
+
+    it('should chain resolutions', function(done) {
+        var f1 = function(   ) { var p1 = p(); setTimeout(function() {p1.resolve(      'p1');}, 40); return p1; }
+        var f2 = function(res) { var p2 = p(); setTimeout(function() {p2.resolve(res + 'p2');}, 20); return p2; }
+        var f3 = function(res) { var p3 = p(); setTimeout(function() {p3.resolve(res + 'p3');}, 10); return p3; }
+
+        f1()
+            .then(f2)
+            .then(f3)
+            .then(function(res) {
+                expect(res).to.eql('p1p2p3');
+                done();
+            });
+    });
+
+    it('should pipe promise', function(done) {
+        var p1 = p();
+        var p2 = p();
+
+        p2.then(function(data) {
+            expect(data).to.eql(2);
+            done();
+        });
+
+        p1.pipe(p2);
+
+        p1.resolve(2);
+    });
 });
