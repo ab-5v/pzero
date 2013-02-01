@@ -163,6 +163,27 @@ describe('promise', function() {
         expect(res).to.eql(1);
     });
 
+    it('should else when one of multiple promises rejects', function() {
+        var res = '';
+        var p1 = p();
+        var p2 = p();
+        var p3 = p();
+
+        p.when([p1, p2, p3])
+            .then(function(val) {
+                res += val;
+            })
+            .esle(function(val) {
+                res += 'err' + val;
+            });
+
+        p1.resolve('a');
+        p2.reject('b');
+        p3.resolve('c');
+
+        expect(res).to.be('errb');
+    });
+
     it('should be resolved with falsy value', function() {
         var p1 = p();
         var callback = sinon.spy();
