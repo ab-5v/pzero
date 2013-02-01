@@ -58,11 +58,31 @@ describe('promise', function() {
     it('should fire multiple callbacks', function() {
         var count = '';
         this.promise.then(function() { count+='a'; });
-        this.promise.then(function() { count+='b'; });
 
         this.promise.resolve();
+        this.promise.resolve();
 
-        expect(count).to.eql('ab');
+        expect(count).to.eql('a');
+    });
+
+    it('should call each callback only once', function() {
+        var count = ''
+        this.promise.then(function() { count+='a'; });
+
+        this.promise.resolve();
+        this.promise.resolve();
+
+        expect(count).to.eql('a');
+    });
+
+    it('should not change value', function(done) {
+        this.promise.resolve(2);
+        this.promise.resolve(3);
+
+        this.promise.then(function(value) {
+            expect(value).to.be(2);
+            done();
+        })
     });
 
     it('should wait for promise', function(done) {
