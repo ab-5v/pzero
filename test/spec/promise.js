@@ -304,6 +304,30 @@ describe('promise', function() {
             });
     });
 
+    it('should chain not promised functions', function(done) {
+
+        this.promise
+            .then(function() { return 3; })
+            .then(function(data) {
+                expect(data).to.be(3);
+                done();
+            });
+
+        this.promise.resolve();
+    });
+
+    it('should pass resolution', function(done) {
+
+        this.promise
+            .then(function() { var p1 = p(); p1.resolve(3); return p1; } )
+            .then(function(data) {
+                expect(data).to.be(3);
+                done();
+            });
+
+        this.promise.resolve();
+    });
+
     it('should pipe promise', function(done) {
         var p1 = p();
         var p2 = p();
