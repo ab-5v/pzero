@@ -21,6 +21,6 @@
     },
     "main": "lib/p",
     "scripts": {
-        "test": "mocha test/spec"
+        "test": "./node_modules/.bin/mocha test/spec"
     }
 }
