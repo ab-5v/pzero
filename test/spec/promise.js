@@ -1,6 +1,16 @@
-var sinon = require('sinon');
-var expect = require('expect.js');
-var p = require('../../lib/p.js');
+;(function(root) {
+
+var sinon, expect, p;
+
+if (typeof require !== 'undefined') {
+    sinon = require('sinon');
+    expect = require('expect.js');
+    p = require('../../lib/p.js');
+} else {
+    sinon = root.sinon;
+    expect = root.expect;
+    p = root.pzero;
+}
 
 
 describe('promise', function() {
@@ -342,3 +352,5 @@ describe('promise', function() {
         p1.resolve(2);
     });
 });
+
+})(this);
