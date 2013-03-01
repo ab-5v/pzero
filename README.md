@@ -15,7 +15,7 @@ Install it with NPM or add it to your package.json:
 
 Then:
 
-    var expect = require('pzero');
+    var pzero = require('pzero');
     
 ### Browser
 
