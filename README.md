@@ -19,7 +19,7 @@ Then:
     
 ### Browser
 
-<script src="pzero.js"></script>
+    <script src="pzero.js"></script>
 
 ## Api
 
