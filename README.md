@@ -28,19 +28,9 @@ Then:
 
     pzero
       .when([promise1, promise2])
-      .then(function(results) {
-        return {
-          result1: results[0],
-          result2: results[1]
-        };
-      })
-      .then(function(data) {
-        // 3
-        return data.result1 + data.result2
-      })
-      .esle(function(results) {
-        // rejected
-      });
+      .then(function(results) { return { a: results[0], b: results[1] }; })
+      .then(function(data) { alert( data.a + data.b ); /* 3 */ })
+      .esle(function(results) { /* rejected */ });
       
     promise1.resolve(1);
     promise2.resolve(2);
