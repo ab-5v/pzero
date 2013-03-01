@@ -1,6 +1,6 @@
 {
-    "name": "p0",
-    "version": "0.2.1",
+    "name": "pzero",
+    "version": "0.3.0",
     "description": "Small promise lib",
     "keywords": [ "promise", "deferred", "flow" ],
     "author": {
@@ -9,7 +9,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git://github.com/artjock/p.git"
+        "url": "git://github.com/artjock/pzero.git"
     },
     "engines": {
         "node": "*"
@@ -19,7 +19,7 @@
         "expect.js": "*",
         "sinon": "*"
     },
-    "main": "lib/p",
+    "main": "pzero",
     "scripts": {
         "test": "./node_modules/.bin/mocha test/spec"
     }

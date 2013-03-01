@@ -1,25 +1,25 @@
 ;(function(root) {
 
-var sinon, expect, p;
+var sinon, expect, pzero;
 
 if (typeof require !== 'undefined') {
     sinon = require('sinon');
     expect = require('expect.js');
-    p = require('../../lib/p.js');
+    pzero = require('../../pzero.js');
 } else {
     sinon = root.sinon;
     expect = root.expect;
-    p = root.pzero;
+    pzero = root.pzero;
 }
 
 
 describe('promise', function() {
     beforeEach(function() {
-        this.promise = p();
+        this.promise = pzero();
     });
 
     it('should be instance of p', function() {
-        expect(this.promise instanceof p).to.be.ok();
+        expect(this.promise instanceof pzero).to.be.ok();
     });
 
     it('should fire with resolve at the end', function(done) {
@@ -147,7 +147,7 @@ describe('promise', function() {
     });
 
     it('should wait for promise', function(done) {
-        p.when([this.promise]).then(function(data) {
+        pzero.when([this.promise]).then(function(data) {
             expect(data[0]).to.eql(1);
             done();
         });
@@ -157,11 +157,11 @@ describe('promise', function() {
 
     it('should wait for multiple promises', function() {
         var res = 0;
-        var p1 = p();
-        var p2 = p();
-        var p3 = p();
+        var p1 = pzero();
+        var p2 = pzero();
+        var p3 = pzero();
 
-        p.when([p1,p2,p3]).then(function() {
+        pzero.when([p1,p2,p3]).then(function() {
             res = 1;
         });
 
@@ -175,11 +175,11 @@ describe('promise', function() {
 
     it('should else when one of multiple promises rejects', function() {
         var res = '';
-        var p1 = p();
-        var p2 = p();
-        var p3 = p();
+        var p1 = pzero();
+        var p2 = pzero();
+        var p3 = pzero();
 
-        p.when([p1, p2, p3])
+        pzero.when([p1, p2, p3])
             .then(function(val) {
                 res += val;
             })
@@ -195,7 +195,7 @@ describe('promise', function() {
     });
 
     it('should be resolved with falsy value', function() {
-        var p1 = p();
+        var p1 = pzero();
         var callback = sinon.spy();
 
         p1.resolve(false);
@@ -206,9 +206,9 @@ describe('promise', function() {
 
     it('should chain promises', function(done) {
         var res = '';
-        var f1 = function() { var p1 = p(); p1.resolve(); res += 'p1'; return p1; }
-        var f2 = function() { var p2 = p(); p2.resolve(); res += 'p2'; return p2; }
-        var f3 = function() { var p3 = p(); p3.resolve(); res += 'p3'; return p3; }
+        var f1 = function() { var p1 = pzero(); p1.resolve(); res += 'p1'; return p1; }
+        var f2 = function() { var p2 = pzero(); p2.resolve(); res += 'p2'; return p2; }
+        var f3 = function() { var p3 = pzero(); p3.resolve(); res += 'p3'; return p3; }
 
         f1()
             .then(f2)
@@ -221,9 +221,9 @@ describe('promise', function() {
 
     it('should chain promises right order', function(done) {
         var res = '';
-        var f1 = function() { var p1 = p(); setTimeout(function() {p1.resolve();}, 40); res += 'p1'; return p1; }
-        var f2 = function() { var p2 = p(); setTimeout(function() {p2.resolve();}, 20); res += 'p2'; return p2; }
-        var f3 = function() { var p3 = p(); setTimeout(function() {p3.resolve();}, 10); res += 'p3'; return p3; }
+        var f1 = function() { var p1 = pzero(); setTimeout(function() {p1.resolve();}, 40); res += 'p1'; return p1; }
+        var f2 = function() { var p2 = pzero(); setTimeout(function() {p2.resolve();}, 20); res += 'p2'; return p2; }
+        var f3 = function() { var p3 = pzero(); setTimeout(function() {p3.resolve();}, 10); res += 'p3'; return p3; }
 
         f1()
             .then(f2)
@@ -235,9 +235,9 @@ describe('promise', function() {
     });
 
     it('should chain resolutions', function(done) {
-        var f1 = function(   ) { var p1 = p(); setTimeout(function() {p1.resolve(      'p1');}, 40); return p1; }
-        var f2 = function(res) { var p2 = p(); setTimeout(function() {p2.resolve(res + 'p2');}, 20); return p2; }
-        var f3 = function(res) { var p3 = p(); setTimeout(function() {p3.resolve(res + 'p3');}, 10); return p3; }
+        var f1 = function(   ) { var p1 = pzero(); setTimeout(function() {p1.resolve(      'p1');}, 40); return p1; }
+        var f2 = function(res) { var p2 = pzero(); setTimeout(function() {p2.resolve(res + 'p2');}, 20); return p2; }
+        var f3 = function(res) { var p3 = pzero(); setTimeout(function() {p3.resolve(res + 'p3');}, 10); return p3; }
 
         f1()
             .then(f2)
@@ -249,9 +249,9 @@ describe('promise', function() {
     });
 
     it('should pass reject by chain without execution', function(done) {
-        var f1 = function(   ) { var p1 = p(); p1.reject(       'p1'); return p1; }
-        var f2 = function(res) { var p2 = p(); expect(2).to.be(3); p2.resolve(res + 'p2'); return p2; }
-        var f3 = function(res) { var p3 = p(); expect(2).to.be(3); p3.resolve(res + 'p3'); return p3; }
+        var f1 = function(   ) { var p1 = pzero(); p1.reject(       'p1'); return p1; }
+        var f2 = function(res) { var p2 = pzero(); expect(2).to.be(3); p2.resolve(res + 'p2'); return p2; }
+        var f3 = function(res) { var p3 = pzero(); expect(2).to.be(3); p3.resolve(res + 'p3'); return p3; }
 
         f1()
             .then(f2)
@@ -263,9 +263,9 @@ describe('promise', function() {
     });
 
     it('should pass reject by chain without execution async', function(done) {
-        var f1 = function(   ) { var p1 = p(); setTimeout(function() {p1.reject(       'p1');}, 40); return p1; }
-        var f2 = function(res) { var p2 = p(); setTimeout(function() {expect(2).to.be(3);p2.resolve(res + 'p2');}, 20); return p2; }
-        var f3 = function(res) { var p3 = p(); setTimeout(function() {expect(2).to.be(3);p3.resolve(res + 'p3');}, 10); return p3; }
+        var f1 = function(   ) { var p1 = pzero(); setTimeout(function() {p1.reject(       'p1');}, 40); return p1; }
+        var f2 = function(res) { var p2 = pzero(); setTimeout(function() {expect(2).to.be(3);p2.resolve(res + 'p2');}, 20); return p2; }
+        var f3 = function(res) { var p3 = pzero(); setTimeout(function() {expect(2).to.be(3);p3.resolve(res + 'p3');}, 10); return p3; }
 
         f1()
             .then(f2)
@@ -278,9 +278,9 @@ describe('promise', function() {
 
     it('should execute all esles in the chain', function(done) {
         var res = '';
-        var f1 = function(   ) { var p1 = p(); p1.reject(       'p1'); return p1; }
-        var f2 = function(res) { var p2 = p(); expect(2).to.be(3); p2.resolve(res + 'p2'); return p2; }
-        var f3 = function(res) { var p3 = p(); expect(2).to.be(3); p3.resolve(res + 'p3'); return p3; }
+        var f1 = function(   ) { var p1 = pzero(); p1.reject(       'p1'); return p1; }
+        var f2 = function(res) { var p2 = pzero(); expect(2).to.be(3); p2.resolve(res + 'p2'); return p2; }
+        var f3 = function(res) { var p3 = pzero(); expect(2).to.be(3); p3.resolve(res + 'p3'); return p3; }
 
         f1()
             .then(f2)
@@ -297,9 +297,9 @@ describe('promise', function() {
 
     it('should execute all esles in the chain async', function(done) {
         var res = '';
-        var f1 = function(   ) { var p1 = p(); setTimeout(function() {p1.reject(       'p1');}, 40); return p1; }
-        var f2 = function(res) { var p2 = p(); setTimeout(function() {expect(2).to.be(3); p2.resolve(res + 'p2');}, 20); return p2; }
-        var f3 = function(res) { var p3 = p(); setTimeout(function() {expect(2).to.be(3); p3.resolve(res + 'p3');}, 10); return p3; }
+        var f1 = function(   ) { var p1 = pzero(); setTimeout(function() {p1.reject(       'p1');}, 40); return p1; }
+        var f2 = function(res) { var p2 = pzero(); setTimeout(function() {expect(2).to.be(3); p2.resolve(res + 'p2');}, 20); return p2; }
+        var f3 = function(res) { var p3 = pzero(); setTimeout(function() {expect(2).to.be(3); p3.resolve(res + 'p3');}, 10); return p3; }
 
         f1()
             .then(f2)
@@ -329,7 +329,7 @@ describe('promise', function() {
     it('should pass resolution', function(done) {
 
         this.promise
-            .then(function() { var p1 = p(); p1.resolve(3); return p1; } )
+            .then(function() { var p1 = pzero(); p1.resolve(3); return p1; } )
             .then(function(data) {
                 expect(data).to.be(3);
                 done();
@@ -339,8 +339,8 @@ describe('promise', function() {
     });
 
     it('should pipe promise', function(done) {
-        var p1 = p();
-        var p2 = p();
+        var p1 = pzero();
+        var p2 = pzero();
 
         p2.then(function(data) {
             expect(data).to.eql(2);
