@@ -172,20 +172,24 @@ pzero.when = function(promises) {
     var result = [];
     var len = promises.length;
 
-    promises.forEach(function(current, i) {
-        current
-            .then(function(value) {
-                result[i] = value;
-                len--;
+    if (len) {
+        promises.forEach(function(current, i) {
+            current
+                .then(function(value) {
+                    result[i] = value;
+                    len--;
 
-                if (!len) {
-                    promise.resolve(result);
-                }
-            })
-            .esle(function(value) {
-                promise.reject(value);
-            });
-    });
+                    if (!len) {
+                        promise.resolve(result);
+                    }
+                })
+                .esle(function(value) {
+                    promise.reject(value);
+                });
+        });
+    } else {
+        promise.resolve([]);
+    }
 
     return promise;
 };

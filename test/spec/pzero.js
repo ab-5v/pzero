@@ -146,6 +146,10 @@ describe('promise', function() {
         })
     });
 
+    it('should not wait for empty array of promises', function(done) {
+        pzero.when([]).then(function() { done(); });
+    });
+
     it('should wait for promise', function(done) {
         pzero.when([this.promise]).then(function(data) {
             expect(data[0]).to.eql(1);
