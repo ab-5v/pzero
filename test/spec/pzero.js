@@ -18,6 +18,14 @@ describe('promise', function() {
         this.promise = pzero();
     });
 
+    it('should return promise on resolve', function() {
+        expect( this.promise.resolve() ).to.eql( this.promise );
+    });
+
+    it('should return promise on reject', function() {
+        expect( this.promise.reject() ).to.eql( this.promise );
+    });
+
     it('should be instance of p', function() {
         expect(this.promise instanceof pzero).to.be.ok();
     });

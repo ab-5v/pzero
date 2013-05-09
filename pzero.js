@@ -40,6 +40,8 @@ proto = pzero.prototype = {
         while ( callback = this._onResolve.shift() ) {
             callback(value);
         }
+
+        return this;
     },
 
     /**
@@ -65,6 +67,7 @@ proto = pzero.prototype = {
             original = original.child;
         }
 
+        return this;
     },
 
     /**
