@@ -161,7 +161,7 @@ proto._create.prototype = proto;
  */
 pzero.is = function(obj) {
     return typeof obj === 'object' && obj._is === _IS_VALUE;
-}
+};
 
 /**
  * Waits for all promises to be fulfilled
