@@ -137,6 +137,10 @@ proto = pzero.prototype = {
             promise.resolve(value);
         });
 
+        this.esle(function(error) {
+            promise.reject(error);
+        });
+
         return this;
     },
 

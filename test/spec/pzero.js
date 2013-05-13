@@ -206,6 +206,42 @@ describe('promise', function() {
         expect(res).to.be('errb');
     });
 
+    it('should process resolved when inside then', function(done) {
+        var p1 = pzero();
+        var p2 = pzero();
+
+        pzero()
+            .resolve('')
+            .then(function() {
+                return pzero.when([p1,p2]);
+            })
+            .then(function(res) {
+                expect( res ).to.eql( ['a', 'b'] );
+                done();
+            });
+
+        p1.resolve('a');
+        p2.resolve('b');
+    });
+
+    it('should process rejected when inside then', function(done) {
+        var p1 = pzero();
+        var p2 = pzero();
+
+        pzero()
+            .resolve('')
+            .then(function() {
+                return pzero.when([p1,p2]);
+            })
+            .esle(function(err) {
+                expect( err ).to.eql( 'b' );
+                done();
+            });
+
+        p1.resolve('a');
+        p2.reject('b');
+    });
+
     it('should be resolved with falsy value', function() {
         var p1 = pzero();
         var callback = sinon.spy();
