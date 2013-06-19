@@ -5,9 +5,9 @@ var FUNC = 'function';
     REJECTED = 1;
     FULFILLED = 2;
 
-function pzero(val) {
-    this._state = arguments.length ? FULFILLED : PENDING;
-    this._value = val;
+function pzero() {
+    this._state = PENDING;
+    this._value = undef;
     this._cbs = [];
     this._ebs = [];
 }
@@ -53,8 +53,6 @@ pzero.prototype = {
             this._state = REJECTED;
             this._exec(this._ebs);
         }
-
-        return this;
     },
 
     fulfill: function(value) {
@@ -63,8 +61,6 @@ pzero.prototype = {
             this._state = FULFILLED;
             this._exec(this._cbs);
         }
-
-        return this;
     },
 
     pipe: function(pr) {
