@@ -1,9 +1,10 @@
 [![build status](https://secure.travis-ci.org/artjock/pzero.png)](http://travis-ci.org/artjock/pzero)
 
-pzero
+<a href="http://promises-aplus.github.com/promises-spec"><img src="http://promises-aplus.github.com/promises-spec/assets/logo-small.png" align="right" alt="Promises/A+ logo"/></a>
+pzero [![build status](https://secure.travis-ci.org/artjock/pzero.png)](http://travis-ci.org/artjock/pzero)
 =====
 
-Small A+ like promise library
+API extentions for [p0](//github.com/artjock/p0) A+ promises
 
 ## How to use
 
@@ -27,10 +28,17 @@ Then:
     var promise2 = pzero();
 
     pzero
-      .when([promise1, promise2])
-      .then(function(results) { return { a: results[0], b: results[1] }; })
-      .then(function(data) { alert( data.a + data.b ); /* 3 */ })
-      .esle(function(results) { /* rejected */ });
-      
-    promise1.resolve(1);
-    promise2.resolve(2);
+        .when([promise1, promise2])
+        .then( 
+            function(values) {
+                var value1 = values[0];
+                var value2 = values[1];
+            },
+            function(reason) {}
+        );
+        
+    promise1
+        .fail(function(reason) {});
+        
+    promise1
+        .node(function(reason, value) {});
