@@ -1,4 +1,15 @@
-var p0 = require('p0');
+;(function(root) {
+
+var p0 = typeof require === 'function' ?
+    require('p0') : root.p0;
+
+p0.nextTick = function(cb) {
+    if (typeof process !== 'undefined' && process.nextTick) {
+        process.nextTick(cb, 0);
+    } else {
+        setTimeout(cb, 0);
+    }
+}
 
 var pzero = function(val) {
     var promise = new p0();
@@ -50,4 +61,10 @@ p0.prototype.node = function(callback) {
     );
 };
 
-module.exports = pzero;
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = pzero;
+} else {
+    root.pzero = pzero;
+}
+
+})(this);

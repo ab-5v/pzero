@@ -21,13 +21,14 @@
   "devDependencies": {
     "mocha": "*",
     "expect.js": "*",
-    "sinon": "*"
+    "sinon": "*",
+    "borschik": "~0.3.2"
   },
   "main": "pzero",
   "scripts": {
     "test": "./node_modules/.bin/mocha -t 100 test/spec"
   },
   "dependencies": {
-    "p0": "0.0.1"
+    "p0": "0.0.2"
   }
 }
