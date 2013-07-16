@@ -40,3 +40,7 @@ Then:
         
     promise1
         .node(function(reason, value) {});
+        
+    var cb = promise1.callback();
+    // reject promise -> cb(reason);
+    // fulfill promise -> cb(null, value);
