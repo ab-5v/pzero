@@ -78,6 +78,32 @@ describe('pzero', function() {
 
     });
 
+    describe('callback', function() {
+
+        beforeEach(function() {
+            this.cb = this.promise.callback();
+        });
+
+        it('should reject promise when callback gets reason', function(done) {
+            this.promise.then(null, function(reason) {
+                expect( reason ).to.eql( 123 );
+                done();
+            });
+
+            this.cb(123);
+        });
+
+        it('should fulfill promise when calback gets value', function(done) {
+            this.promise.then(function(value) {
+                expect( value ).to.eql( 123 );
+                done();
+            }, null);
+
+            this.cb(null, 123);
+        });
+
+    });
+
     describe('pzero.when', function() {
 
         it('should fulfill on all promises fulfilled', function(done) {

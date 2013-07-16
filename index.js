@@ -61,6 +61,18 @@ p0.prototype.node = function(callback) {
     );
 };
 
+p0.prototype.callback = function() {
+    var that = this;
+
+    return function(err, data) {
+        if (err) {
+            that.reject(err);
+        } else {
+            that.fulfill(data);
+        }
+    }
+};
+
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = pzero;
 } else {
