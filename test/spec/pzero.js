@@ -59,29 +59,8 @@ describe('pzero', function() {
 
     describe('node', function() {
 
-        it('should run callback with reason', function(done) {
-            this.promise.node(function(err, data) {
-                expect( err ).to.eql( 123 );
-                expect( arguments.length ).to.eql( 1 );
-                done();
-            });
-            this.promise.reject(123);
-        });
-
-        it('should run callback with data', function() {
-            this.promise.node(function(err, data) {
-                expect( err ).to.eql( null );
-                expect( data ).to.eql( 123 );
-            });
-            this.promise.fulfill(123);
-        });
-
-    });
-
-    describe('callback', function() {
-
         beforeEach(function() {
-            this.cb = this.promise.callback();
+            this.cb = this.promise.node();
         });
 
         it('should reject promise when callback gets reason', function(done) {
@@ -100,6 +79,23 @@ describe('pzero', function() {
             }, null);
 
             this.cb(null, 123);
+        });
+
+        it('should run callback with reason', function(done) {
+            this.promise.node(function(err, data) {
+                expect( err ).to.eql( 123 );
+                expect( arguments.length ).to.eql( 1 );
+                done();
+            });
+            this.promise.reject(123);
+        });
+
+        it('should run callback with data', function() {
+            this.promise.node(function(err, data) {
+                expect( err ).to.eql( null );
+                expect( data ).to.eql( 123 );
+            });
+            this.promise.fulfill(123);
         });
 
     });

@@ -50,28 +50,23 @@ p0.prototype.fail = function(onReject) {
 };
 
 p0.prototype.node = function(callback) {
-
-    return this.then(
-        function(value) {
-            return callback(null, value);
-        },
-        function(reason) {
-            return callback(reason);
-        }
-    );
-};
-
-p0.prototype.callback = function() {
     var that = this;
 
-    return function(err, data) {
-        if (err) {
-            that.reject(err);
-        } else {
-            that.fulfill(data);
-        }
-    }
+    return typeof callback === 'function' ?
+        this.then(
+            function(value) { return callback(null, value); },
+            function(reason) { return callback(reason); }
+        ):
+        function(err, data) {
+            if (err) {
+                that.reject(err);
+            } else {
+                that.fulfill(data);
+            }
+        };
 };
+
+p0.prototype.callback = p0.prototype.node;
 
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = pzero;
