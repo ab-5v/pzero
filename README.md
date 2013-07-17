@@ -38,8 +38,7 @@ Then:
     promise1
         .fail(function(reason) {});
         
-    promise1
-        .node(function(reason, value) {});
+    promise1.callback(function(reason, value) {});
         
     var cb = promise1.callback();
     // reject promise -> cb(reason);
