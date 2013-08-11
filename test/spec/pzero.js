@@ -1,6 +1,7 @@
 if (typeof require === 'function') {
     sinon = require('sinon');
     expect = require('expect.js');
+    p0 = require('p0');
     pzero = require('../../index.js');
 }
 
@@ -96,6 +97,48 @@ describe('pzero', function() {
                 expect( data ).to.eql( 123 );
             });
             this.promise.fulfill(123);
+        });
+
+    });
+
+    describe('pipe', function() {
+
+        it('should pipe fulfillment', function(done) {
+            var test = pzero();
+
+            this.promise.pipe(test);
+
+            test.then(function(value) {
+                expect( value ).to.eql( 2 );
+                done();
+            });
+
+            this.promise.fulfill(2);
+        });
+
+        it('should pipe rejection', function(done) {
+            var test = pzero();
+
+            this.promise.pipe(test);
+
+            test.then(null, function(reason) {
+                expect( reason ).to.eql( 3 );
+                done();
+            });
+
+            this.promise.reject(3);
+        });
+
+        it('should return promise', function() {
+            var piped = this.promise.pipe(pzero());
+
+            expect( p0.is(piped) ).to.be.ok();
+        });
+
+        it('should ignore non-promise values', function() {
+            var piped = this.promise.pipe(function() {});
+
+            expect( piped ).to.equal( this.promise );
         });
 
     });

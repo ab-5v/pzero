@@ -66,6 +66,14 @@ p0.prototype.node = function(callback) {
         };
 };
 
+p0.prototype.pipe = function(promise) {
+
+    return !p0.is(promise) ? this : this.then(
+        function(value) { promise.fulfill(value); },
+        function(reason) { promise.reject(reason); }
+    );
+};
+
 p0.prototype.callback = p0.prototype.node;
 
 if (typeof module !== 'undefined' && module.exports) {
