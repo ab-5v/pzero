@@ -1,15 +1,8 @@
 ;(function(root) {
+'use strict';
 
 var p0 = typeof require === 'function' ?
-    require('p0') : root.p0;
-
-p0.nextTick = function(cb) {
-    if (typeof process !== 'undefined' && process.nextTick) {
-        process.nextTick(cb, 0);
-    } else {
-        setTimeout(cb, 0);
-    }
-}
+    require('p0') : (root || window).p0;
 
 var pzero = function(val) {
     var promise = new p0();
@@ -43,6 +36,10 @@ pzero.when = function(set) {
     });
 
     return result;
+};
+
+p0.is = function(promise) {
+    return promise && typeof promise.then == 'function';
 };
 
 p0.prototype.fail = function(onReject) {
