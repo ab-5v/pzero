@@ -132,7 +132,7 @@ describe('pzero', function() {
         it('should return promise', function() {
             var piped = this.promise.pipe(pzero());
 
-            expect( p0.is(piped) ).to.be.ok();
+            expect( pzero.is(piped) ).to.be.ok();
         });
 
         it('should ignore non-promise values', function() {

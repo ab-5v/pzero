@@ -15,7 +15,7 @@ var pzero = function(val) {
 };
 
 pzero.when = function(set) {
-    var result, values;
+    var result, values, i;
     var length = set.length;
 
     if (!length) { return pzero([]); }
@@ -38,7 +38,7 @@ pzero.when = function(set) {
     return result;
 };
 
-p0.is = function(promise) {
+pzero.is = function(promise) {
     return promise && typeof promise.then == 'function';
 };
 
@@ -65,7 +65,7 @@ p0.prototype.node = function(callback) {
 
 p0.prototype.pipe = function(promise) {
 
-    return !p0.is(promise) ? this : this.then(
+    return !pzero.is(promise) ? this : this.then(
         function(value) { promise.fulfill(value); },
         function(reason) { promise.reject(reason); }
     );
