@@ -1,5 +1,5 @@
 <a href="http://promises-aplus.github.com/promises-spec"><img src="http://promises-aplus.github.com/promises-spec/assets/logo-small.png" align="right" alt="Promises/A+ logo"/></a>
-pzero [![build status](https://secure.travis-ci.org/artjock/pzero.png)](http://travis-ci.org/artjock/pzero)
+pzero [![build status](https://travis-ci.org/artjock/pzero.svg)](http://travis-ci.org/artjock/pzero)
 =====
 
 API extentions for [p0](//github.com/artjock/p0) A+ promises
